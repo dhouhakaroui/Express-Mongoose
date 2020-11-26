@@ -2,7 +2,7 @@
 "use strict"
 const express = require('express');
 const app = express();
-const port=5000;
+const port=4000;
 app.use(express.json())
 
 // Install and setup mongoose:
@@ -110,8 +110,8 @@ app.get('/person/:favoriteFoods', (req, res) => {
 })
 // Use model.findById() to Search Your Database By _id
 // let personId="5fafffdadf8e423674c8a6d4"
-app.get('/person/:id', (req, res) => {
-PersonModel.findById(req.params.id,(err,doc)=>{
+app.get('/person/:_id', (req, res) => {
+PersonModel.findById(req.params._id,(err,doc)=>{
     if(err){console.error(err);}
     console.log(doc);
 })
@@ -125,8 +125,8 @@ PersonModel.findById(req.params.id,(err,doc)=>{
 })
 
 // Perform Classic Updates by Running Find, Edit, then Save
-app.put("/updatePerson/:id",(req,res)=>{
-    PersonModel.findById(req.params.id,(err,data)=>{
+app.put("/updatePerson/:_id",(req,res)=>{
+    PersonModel.findById(req.params._id,(err,data)=>{
         if(err){console.log(err)}
         else {data.favoriteFoods.push("hamburger")};
         data.save((err,data)=>{
@@ -144,8 +144,8 @@ PersonModel.findOneAndUpdate({name:req.params.name},{age:20},{new:true},(err,doc
 })
 
 // Delete One Document Using model.findByIdAndRemove
-app.delete("/deletePerson/:id",(req,res)=>{
-    PersonModel.findOneAndDelete(req.params.id,(err,doc)=>{
+app.delete("/deletePerson/:_id",(req,res)=>{
+    PersonModel.findOneAndDelete(req.params._id,(err,doc)=>{
         if (err) console.log(err)
         console.log(doc); })
     .then( doc => res.send( doc ) )
