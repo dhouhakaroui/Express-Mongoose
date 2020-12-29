@@ -1,7 +1,5 @@
 
-
-
-const arrayOfPeople=[
+module.export= arrayOfPeople=[
     {
         name: 'Ines',
         age: 26,

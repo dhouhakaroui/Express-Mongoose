@@ -7,10 +7,10 @@ app.use(express.json())
 
 // Install and setup mongoose:
 const mongoose=require('mongoose')
-const PersonModel=require('./src/models/person')
+const PersonModel=require('./models/person')
 require("dotenv").config();
 
-// process.env.MONGO_URI='mongodb://localhost:3000/mydatabase'
+// process.env.MONGO_URI='mongodb://localhost:27017/mydatabase'
 // database
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true },(err) => {
@@ -20,52 +20,25 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 
 // Create a person having this prototype:
+// models/person.js
+
+// Create and Save a Record of a Model:
 let person=new PersonModel({
     name:'Dhouha',
     age:27,
     favoriteFoods:['Pizza','Tacos','Spaghetti','burrito']
 })
 
-// Create and Save a Record of a Model:
 person.save(function(err,doc){
     if (err) console.log(err)
     console.log(doc); 
 }) 
 
 // Create Many Records with model.create()
-// const arrayOfPeople=[
-//     {
-//         name: 'Ines',
-//         age: 26,
-//         favoriteFoods:['Hambourger','Couscous','burrito']
-//     },
-//     {
-//         name: 'Wissal',
-//         age: 27,
-//         favoriteFoods:['Pizza','Cousous']
-//     },
-//     {
-//         name: 'John',
-//         age: 17,
-//         favoriteFoods:['Pizza','Bianca','burrito']
-//     },
-//     {
-//         name: 'Mary',
-//         age: 20,
-//         favoriteFoods:['Sushi','Tacos','Hambourger']
-//     },
-//     {
-//         name: 'Marry',
-//         age: 42,
-//         favoriteFoods:['Salad','Hamburger','Tacos']
-//     },
-//     {
-//         name: 'Fili',
-//         age: 12,
-//         favoriteFoods:['Pizza','Steak','burrito']
-//     }
-// ])
 
+PersonModel.create(require("./arrayOfpeople"))
+
+// create with express
 app.post('/', (req, res) => { 
     PersonModel.create({
         name:req.body.name,
